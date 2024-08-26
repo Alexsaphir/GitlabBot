@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "GitlabBot"
+version = "0.1.0"
+description = ""
+authors = ["Alexsaphir <git@alexsaphir.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+
+pydantic = "^2.8.2"
+pydantic-settings = "^2.4.0"
+loguru = "^0.7.2"
+python-gitlab = "^4.9.0"
+flux-local = "^5.5.1"
+
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+
+[tool.poetry.scripts]
+gitlab-comment = 'gitlabbot.cli:make_flux_comments'
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
