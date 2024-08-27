@@ -116,9 +116,10 @@ class FluxDiffCommentArgs(Cmd):
                 notes.append(note)
 
             post_diff(diff_file=self.diff_file,
+                      comment_mode=self.comment_mode,
                       flux_resource=self.flux_resource, diff_mode=self.diff_mode,
                       mr=mr, notes=notes)
 
 
 def flux_diff_comment():
-    run_and_exit(FluxDiffCommentArgs, description="Post hr/ks diff comments.", version='0.2.0')
+    run_and_exit(FluxDiffCommentArgs, description="Post hr/ks diff comments.", version='0.2.2')
