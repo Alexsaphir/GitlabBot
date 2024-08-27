@@ -16,8 +16,8 @@ type FluxResource = Literal['hr', 'ks']
 type DiffMode = Literal['diff', 'dyff']
 
 flux_resources_name: dict[FluxResource, str] = {
-        'hr': 'HelmRelease',
-        'ks': 'Kustomization',
+        'hr': 'HelmRelease (Cluster side)',
+        'ks': 'Kustomization (GitOps side)',
         }
 
 
@@ -122,4 +122,4 @@ class FluxDiffCommentArgs(Cmd):
 
 
 def flux_diff_comment():
-    run_and_exit(FluxDiffCommentArgs, description="Post hr/ks diff comments.", version='0.2.2')
+    run_and_exit(FluxDiffCommentArgs, description="Post hr/ks diff comments.", version='0.2.4')
