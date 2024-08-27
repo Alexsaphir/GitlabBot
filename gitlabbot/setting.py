@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import Tuple, Type
 
 from pydantic import Field, SecretStr
@@ -24,7 +25,8 @@ class ProjectSettings(BaseSettings):
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(yaml_file=os.getenv('CONFIG_FILE', '.config.yaml'))
+    model_config = SettingsConfigDict(
+        yaml_file=os.getenv('CONFIG_FILE', '.config.yaml' if Path('.config.yaml').exists() else None))
 
     gitlab: GitlabSettings
     project: ProjectSettings

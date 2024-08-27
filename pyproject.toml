@@ -1,25 +1,31 @@
 [tool.poetry]
 name = "GitlabBot"
-version = "0.1.0"
+version = "0.2.0"
 description = ""
 authors = ["Alexsaphir <git@alexsaphir.com>"]
 readme = "README.md"
+license = "Apache-2.0"
+repository = "https://github.com/Alexsaphir/GitlabBot"
 
 [tool.poetry.dependencies]
-python = ">=3.10"
+python = ">=3.12"
+
+
+python-gitlab = "^4.9.0"
 
 pydantic = "^2.8.2"
+pydantic-cli = "^9.0.0"
 pydantic-settings = "^2.4.0"
-loguru = "^0.7.2"
-python-gitlab = "^4.9.0"
-flux-local = "^5.5.1"
 
+loguru = "^0.7.2"
+
+flux-local = "^5.5.1"
 
 [tool.poetry.group.dev.dependencies]
 jupyter = "^1.0.0"
 
 [tool.poetry.scripts]
-gitlab-comment = 'gitlabbot.cli:make_flux_comments'
+gitlab-comment = 'gitlabbot.cli:flux_diff_comment'
 
 [build-system]
 requires = ["poetry-core"]
