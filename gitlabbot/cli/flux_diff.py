@@ -30,11 +30,6 @@ def clean_diff(lines: list[str]) -> str:
 
 
 def clean_dyff(lines: list[str]) -> str:
-
-    # delete first blank line
-    if lines[0] == '\n':
-        lines[0] = ''
-
     return re.sub(r'\n{3,}=(.*?)\n=(.*?)\n#(.*?)\n',
                   r'\n\n=\1\n=\2\n#\3\n',
                   ''.join(lines)).lstrip('\n').rstrip('\n')
@@ -72,13 +67,9 @@ def post_diff(diff_file: Path,
                              flux_resource=flux_resource, diff_mode=diff_mode,
                              )
 
-    if content is None:
-        logger.warning('No diff')
-        return
+    notes = find_note(notes=notes, str_to_match=header_guard(flux_resource=flux_resource))
 
-    note = find_note(notes=notes, str_to_match=header_guard(flux_resource=flux_resource))
-
-    make_note(resource=mr, note_content=content, existing_note=note, comment_mode=comment_mode)
+    make_note(resource=mr, note_content=content, existing_notes=notes, comment_mode=comment_mode)
 
 
 class FluxDiffCommentArgs(Cmd):
@@ -122,4 +113,4 @@ class FluxDiffCommentArgs(Cmd):
 
 
 def flux_diff_comment():
-    run_and_exit(FluxDiffCommentArgs, description="Post hr/ks diff comments.", version='0.2.4')
+    run_and_exit(FluxDiffCommentArgs, description="Post hr/ks diff comments.", version='0.2.5')
