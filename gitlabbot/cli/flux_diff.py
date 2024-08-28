@@ -54,6 +54,9 @@ def create_content(diff_file: Path,
     else:
         raise ValueError(f'Unsupported diff mode: {diff_mode}')
 
+    if diff == '':
+        return None
+
     return f'{header_guard(flux_resource)}\n# {flux_resources_name[flux_resource]}\n```diff\n{diff}\n```'
 
 
@@ -113,4 +116,4 @@ class FluxDiffCommentArgs(Cmd):
 
 
 def flux_diff_comment():
-    run_and_exit(FluxDiffCommentArgs, description="Post hr/ks diff comments.", version='0.2.5')
+    run_and_exit(FluxDiffCommentArgs, description="Post hr/ks diff comments.", version='0.2.6')

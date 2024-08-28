@@ -16,7 +16,7 @@ You can use the following content to setup GitLab CI to post the diff comment.
 .flux-local-diff:
   stage: flux-local
   image:
-    name: ghcr.io/alexsaphir/gitlabbot:v0.2.3
+    name: ghcr.io/alexsaphir/gitlabbot:v0.2.6
   parallel:
     matrix:
       - FLUX_RESOURCE:
