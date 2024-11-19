@@ -11,18 +11,18 @@ repository = "https://github.com/Alexsaphir/GitlabBot"
 python = ">=3.12"
 
 
-python-gitlab = "^4.9.0"
+python-gitlab = "^5.0.0"
 
-pydantic = "^2.8.2"
-pydantic-cli = "^9.0.0"
-pydantic-settings = "^2.4.0"
+pydantic = "^2.9.2"
+pydantic-cli = "^9.1.0"
+pydantic-settings = "^2.6.1"
 
 loguru = "^0.7.2"
 
-flux-local = "^5.5.1"
+flux-local = "^6.0.2"
 
 [tool.poetry.group.dev.dependencies]
-jupyter = "^1.0.0"
+jupyter = "^1.1.1"
 
 [tool.poetry.scripts]
 gitlab-comment = 'gitlabbot.cli:flux_diff_comment'
