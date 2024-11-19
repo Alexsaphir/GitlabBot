@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "GitlabBot"
-version = "0.2.6"
+version = "0.2.8"
 description = ""
 authors = ["Alexsaphir <git@alexsaphir.com>"]
 readme = "README.md"
