@@ -1,6 +1,7 @@
 import re
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Literal
+from typing import cast, Literal
 
 import gitlab
 from gitlab.v4.objects import ProjectMergeRequest, ProjectMergeRequestNote
@@ -41,7 +42,7 @@ def header_guard(flux_resource: FluxResource) -> str:
 
 def create_content(diff_file: Path,
                    flux_resource: FluxResource, diff_mode: DiffMode) -> str | None:
-    with open(diff_file, 'r') as f:
+    with open(diff_file) as f:
         diff_lines = f.readlines()
 
     if not diff_lines:
@@ -64,15 +65,15 @@ def post_diff(diff_file: Path,
               flux_resource: FluxResource, diff_mode: DiffMode,
               comment_mode: CommentMode,
               mr: ProjectMergeRequest,
-              notes: list[ProjectMergeRequestNote]):
+              notes: Sequence[ProjectMergeRequestNote]):
 
     content = create_content(diff_file=diff_file,
                              flux_resource=flux_resource, diff_mode=diff_mode,
                              )
 
-    notes = find_note(notes=notes, str_to_match=header_guard(flux_resource=flux_resource))
+    notes_found = find_note(notes=notes, str_to_match=header_guard(flux_resource=flux_resource))
 
-    make_note(resource=mr, note_content=content, existing_notes=notes, comment_mode=comment_mode)
+    make_note(resource=mr, note_content=content, existing_notes=notes_found, comment_mode=comment_mode)
 
 
 class FluxDiffCommentArgs(Cmd):
@@ -83,7 +84,7 @@ class FluxDiffCommentArgs(Cmd):
     comment_mode: CommentMode = Field(default='recreate')
 
     def run(self) -> None:
-        settings = Settings()
+        settings = Settings()  # pyright: ignore [reportCallIssue]
 
         logger.debug(f"Running with opts:{self}")
         logger.debug(settings)
@@ -93,6 +94,9 @@ class FluxDiffCommentArgs(Cmd):
             # Fetch the user used.
             gl.auth()
             user = gl.user
+
+            if user is None:
+                raise RuntimeError('Gitlab user not found.')
 
             project = gl.projects.get(id=settings.project.project_id)
             mr = project.mergerequests.get(id=settings.project.merge_request_iid)
@@ -105,6 +109,8 @@ class FluxDiffCommentArgs(Cmd):
             # Fetch all notes owned by the user
             notes: list[ProjectMergeRequestNote] = []
             for note in mr.notes.list(iterator=True):
+                note = cast(ProjectMergeRequestNote, note)
+
                 if note.author['username'] != user.username:
                     continue
                 notes.append(note)
