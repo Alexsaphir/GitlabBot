@@ -24,6 +24,7 @@ dependencies = [
     "python-gitlab>=5.6",
 ]
 
+scripts.gitlab-comment = "gitlabbot.cli:flux_diff_comment"
 repository = "https://github.com/Alexsaphir/GitlabBot"
 
 [dependency-groups]
