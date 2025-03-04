@@ -16,7 +16,7 @@ classifiers = [
 ]
 dynamic = [ "version" ]
 dependencies = [
-    "flux-local>=7.1",
+    "flux-local>=7.2",
     "loguru>=0.7.3",
     "pydantic>=2.10.6",
     "pydantic-cli>=9.1",

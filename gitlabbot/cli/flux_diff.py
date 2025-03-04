@@ -122,4 +122,5 @@ class FluxDiffCommentArgs(Cmd):
 
 
 def flux_diff_comment():
-    run_and_exit(FluxDiffCommentArgs, description="Post hr/ks diff comments.", version='0.2.6')
+    from gitlabbot import __version__
+    run_and_exit(FluxDiffCommentArgs, description="Post hr/ks diff comments.", version=__version__)
