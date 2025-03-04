@@ -1,7 +1,7 @@
 ARG PYTHON_FLAVOR=alpine
 FROM python:3.12-${PYTHON_FLAVOR} AS build
 
-RUN apk git
+RUN apk add git
 
 WORKDIR /opt/GitlabBot
 COPY . .
