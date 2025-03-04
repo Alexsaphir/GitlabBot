@@ -1,6 +1,8 @@
 ARG PYTHON_FLAVOR=alpine
 FROM python:3.12-${PYTHON_FLAVOR} AS build
 
+RUN apk git
+
 WORKDIR /opt/GitlabBot
 COPY . .
 RUN pip install --no-cache-dir build && python -m build --wheel
@@ -12,7 +14,6 @@ LABEL org.opencontainers.image.source="https://github.com/Alexsaphir/GitlabBot"
 ENV CONFIG_FILE='.gitlabbot.yaml'
 
 WORKDIR /opt/GitlabBot
-COPY --from=build /opt/GitlabBot/dist dist/
 
 RUN apk add curl git kustomize helm
 
@@ -21,5 +22,6 @@ RUN curl -sSL https://github.com/homeport/dyff/releases/download/v1.9.0/dyff_1.9
     mv dyff /usr/local/bin/  && \
     mv flux /usr/local/bin/
 
+COPY --from=build /opt/GitlabBot/dist dist/
 RUN pip install --no-cache-dir $(find dist -name *.whl) && \
     rm -rf dist/
